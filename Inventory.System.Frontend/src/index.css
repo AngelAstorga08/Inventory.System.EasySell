@@ -1,0 +1,16 @@
+:root {
+  font-family: Arial, sans-serif;
+  color: #202124;
+  background: #ffffff;
+  font-size: 16px;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: light;
+}
+* { box-sizing: border-box; font-family: Arial, sans-serif; }
+body { margin: 0; min-width: 320px; }
+button, input, textarea, select { font: inherit; }
+a { color: inherit; }
+button:focus-visible, a:focus-visible { outline: 3px solid #91b0ff; outline-offset: 4px; }

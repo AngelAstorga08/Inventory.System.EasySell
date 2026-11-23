@@ -1,0 +1,18 @@
+[flyway]
+locations = ["filesystem:migrations", "filesystem:functions"]
+validateMigrationNaming = true
+cleanDisabled = true
+
+[environments.local]
+url = "jdbc:postgresql://localhost:5432/inventory_system"
+
+# Temporary PostgreSQL service used by GitHub Actions.
+[environments.ci]
+url = "jdbc:postgresql://localhost:5432/inventory_system"
+user = "postgres"
+password = "postgres"
+
+[environments.production]
+url = "${env.PROD_DATABASE_URL}"
+user = "${env.PROD_DATABASE_USER}"
+password = "${env.PROD_DATABASE_PASSWORD}"

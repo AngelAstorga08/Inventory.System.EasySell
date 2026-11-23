@@ -1,0 +1,155 @@
+# =========================
+# Project files
+# =========================
+/outputs/
+
+# =========================
+# .NET / Visual Studio
+# =========================
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+
+# Visual Studio
+.vs/
+*.user
+*.rsuser
+*.suo
+*.userosscache
+*.sln.docstates
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# =========================
+# NuGet
+# =========================
+
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+
+# =========================
+# .NET generated files
+# =========================
+
+project.lock.json
+project.fragment.lock.json
+artifacts/
+TestResults/
+
+# =========================
+# Logs
+# =========================
+
+*.log
+logs/
+Logs/
+
+# =========================
+# Environment / Secrets
+# =========================
+
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# Local application settings
+appsettings.Local.json
+appsettings.*.Local.json
+
+# User secrets
+secrets.json
+
+# =========================
+# Database
+# =========================
+
+flyway.user.toml
+
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# =========================
+# JavaScript / TypeScript
+# =========================
+
+node_modules/
+dist/
+dist-ssr/
+.npm-cache/
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+*.tsbuildinfo
+
+# =========================
+# Rust
+# =========================
+
+target/
+
+# =========================
+# Python
+# =========================
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# =========================
+# OS generated files
+# =========================
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# =========================
+# Coverage
+# =========================
+
+coverage/
+coverage.*
+*.coverage
+*.coveragexml
+
+# =========================
+# Temporary files
+# =========================
+
+*.tmp
+*.temp
+*.bak
+*.swp

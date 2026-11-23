@@ -1,0 +1,71 @@
+name: Database CI
+
+on:
+  pull_request:
+    paths:
+      - 'Inventory.System.Database/migrations/**'
+      - 'Inventory.System.Database/functions/**'
+      - 'Inventory.System.Database/flyway.toml'
+      - 'Inventory.System.Database/tools/flyway.sh'
+      - '.github/workflows/database-ci.yml'
+  push:
+    paths:
+      - 'Inventory.System.Database/migrations/**'
+      - 'Inventory.System.Database/functions/**'
+      - 'Inventory.System.Database/flyway.toml'
+      - 'Inventory.System.Database/tools/flyway.sh'
+      - '.github/workflows/database-ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  migrations:
+    if: github.event_name == 'pull_request' || github.ref != 'refs/heads/main'
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_DB: inventory_system
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d inventory_system"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: red-gate/setup-flyway@v3
+        with:
+          edition: community
+          version: 13.12.1
+          i-agree-to-the-eula: true
+      - name: Apply migrations
+        run: bash Inventory.System.Database/tools/flyway.sh migrate --environment ci
+      - name: Validate migration history
+        run: bash Inventory.System.Database/tools/flyway.sh validate --environment ci
+
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    concurrency:
+      group: database-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - uses: red-gate/setup-flyway@v3
+        with:
+          edition: community
+          version: 13.12.1
+          i-agree-to-the-eula: true
+      - name: Apply migrations to production database
+        env:
+          PROD_DATABASE_URL: ${{ secrets.PROD_DATABASE_URL }}
+          PROD_DATABASE_USER: ${{ secrets.PROD_DATABASE_USER }}
+          PROD_DATABASE_PASSWORD: ${{ secrets.PROD_DATABASE_PASSWORD }}
+        run: bash Inventory.System.Database/tools/flyway.sh migrate --environment production

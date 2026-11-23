@@ -1,0 +1,4 @@
+# Copy to flyway.user.toml and enter your local credentials.
+[environments.local]
+user = "postgres"
+password = "REPLACE_WITH_YOUR_PASSWORD"

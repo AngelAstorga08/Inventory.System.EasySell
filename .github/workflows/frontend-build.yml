@@ -1,0 +1,36 @@
+name: Frontend build
+
+on:
+  pull_request:
+    branches: [develop, main]
+    types: [opened, synchronize, reopened, edited]
+    paths:
+      - 'Inventory.System.Frontend/**'
+      - '.github/workflows/frontend-build.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Inventory.System.Frontend
+    steps:
+      - name: Check out pull request merge
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26.5.0
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 11.20.0
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Lint frontend
+        run: pnpm lint
+      - name: Build frontend
+        run: pnpm build
